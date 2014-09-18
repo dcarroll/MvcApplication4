@@ -75,6 +75,7 @@ namespace MvcApplication4.Controllers
             return View(lead);
 
         }
+
         // POST: /Lead/LeadEdit/003i000000tm2KSAAY
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -103,5 +104,22 @@ namespace MvcApplication4.Controllers
             }
         }
 
+        public async Task<ActionResult> LeadDelete(string id)
+        {
+            // TODO: Resolve Edit failures with ID
+            // Ensure the user is authenticated
+            if (!SalesforceService.IsUserLoggedIn())
+            {
+                // Should include a state argument to the URI so that when the dance is done, we can redirect to the page that we were requesting
+                string myUri = SalesforceOAuthRedirectHandler.AuthorizationUri.ToString() + "&state=" + this.Url.RequestContext.HttpContext.Request.RawUrl;
+                return this.Redirect(myUri);
+            }
+            // Initialize the Force client
+            SalesforceService service = new SalesforceService();
+            ForceClient client = service.GetForceClient();
+
+            var success = await client.DeleteAsync("Lead", id);
+                return RedirectToAction("LeadList");
+        }
     }
 }

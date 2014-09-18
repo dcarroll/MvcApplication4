@@ -291,6 +291,7 @@
     <Content Include="Views\Lead\LeadList.cshtml" />
     <Content Include="Views\Lead\LeadDetail.cshtml" />
     <Content Include="Views\Lead\LeadEdit.cshtml" />
+    <Content Include="Views\Lead\LeadDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
